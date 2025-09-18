@@ -55,10 +55,14 @@ class Nodo:
         
     def hacer_lc(self):
         self.color = AZUL
+        
+    def hacer_camino(self):
+        self.color = VERDE
 
     def dibujar(self, ventana):
         pygame.draw.rect(ventana, self.color, (self.x, self.y, self.ancho, self.ancho))
-
+        
+#Clase hija de Nodo para A* que incluye costos y vecinos
 class NodoAStar(Nodo):
     def __init__(self, fila, col, ancho, total_filas, padre=None, distancia=None, h=None):
         super().__init__(fila, col, ancho, total_filas)
@@ -75,7 +79,7 @@ class NodoAStar(Nodo):
         self.vecinos = []
 
     # Vecinos
-    def actualizar_vecinos(self, grid):
+    def actualizar_vecinos(self, grid, fin):
         self.vecinos = []
         # Abajo
         if self.fila < self.total_filas - 1 and not grid[self.fila + 1][self.col].es_pared():
@@ -84,14 +88,14 @@ class NodoAStar(Nodo):
                                           self.ancho, self.total_filas, 
                                           self, 
                                           self.distancia + 10, 
-                                          0))
+                                          abs(fin.fila - (self.fila + 1)) * 10 + abs(fin.col - self.col) * 10))
         # Arriba
         if self.fila > 0 and not grid[self.fila - 1][self.col].es_pared():
             self.vecinos.append(NodoAStar(grid[self.fila - 1][self.col].fila, 
                                           grid[self.fila - 1][self.col].col, 
                                           self.ancho, self.total_filas, self, 
                                           self.distancia + 10, 
-                                          0))
+                                          abs(fin.fila - (self.fila - 1)) * 10 + abs(fin.col - self.col) * 10))
         # Derecha
         if self.col < self.total_filas - 1 and not grid[self.fila][self.col + 1].es_pared():
             self.vecinos.append(NodoAStar(grid[self.fila][self.col + 1].fila, 
@@ -100,7 +104,7 @@ class NodoAStar(Nodo):
                                           self.total_filas, 
                                           self, 
                                           self.distancia + 10, 
-                                          0))
+                                          abs(fin.fila - self.fila) * 10 + abs(fin.col - (self.col + 1)) * 10))
         # Izquierda
         if self.col > 0 and not grid[self.fila][self.col - 1].es_pared():
             self.vecinos.append(NodoAStar(grid[self.fila][self.col - 1].fila, 
@@ -109,7 +113,7 @@ class NodoAStar(Nodo):
                                           self.total_filas, 
                                           self, 
                                           self.distancia + 10, 
-                                          0))
+                                          abs(fin.fila - self.fila) * 10 + abs(fin.col - (self.col - 1)) * 10))
         # Diagonal abajo-derecha
         if self.fila < self.total_filas - 1 and self.col < self.total_filas - 1 and not grid[self.fila + 1][self.col + 1].es_pared():
             self.vecinos.append(NodoAStar(grid[self.fila + 1][self.col + 1].fila, 
@@ -118,7 +122,7 @@ class NodoAStar(Nodo):
                                           self.total_filas, 
                                           self, 
                                           self.distancia + 15, 
-                                          0))
+                                          abs(fin.fila - (self.fila + 1)) * 10 + abs(fin.col - (self.col + 1)) * 10))
         # Diagonal abajo-izquierda
         if self.fila < self.total_filas - 1 and self.col > 0 and not grid[self.fila + 1][self.col - 1].es_pared():
             self.vecinos.append(NodoAStar(grid[self.fila + 1][self.col - 1].fila, 
@@ -127,7 +131,7 @@ class NodoAStar(Nodo):
                                           self.total_filas, 
                                           self, 
                                           self.distancia + 15, 
-                                          0))
+                                          abs(fin.fila - (self.fila + 1)) * 10 + abs(fin.col - (self.col - 1)) * 10))
         # Diagonal arriba-derecha
         if self.fila > 0 and self.col < self.total_filas - 1 and not grid[self.fila - 1][self.col + 1].es_pared():
             self.vecinos.append(NodoAStar(grid[self.fila - 1][self.col + 1].fila, 
@@ -136,7 +140,7 @@ class NodoAStar(Nodo):
                                           self.total_filas, 
                                           self, 
                                           self.distancia + 15, 
-                                          0))
+                                          abs(fin.fila - (self.fila - 1)) * 10 + abs(fin.col - (self.col + 1)) * 10))
         # Diagonal arriba-izquierda
         if self.fila > 0 and self.col > 0 and not grid[self.fila - 1][self.col - 1].es_pared():
             self.vecinos.append(NodoAStar(grid[self.fila - 1][self.col - 1].fila, 
@@ -145,7 +149,7 @@ class NodoAStar(Nodo):
                                           self.total_filas, 
                                           self, 
                                           self.distancia + 15, 
-                                          0))
+                                          abs(fin.fila - (self.fila - 1)) * 10 + abs(fin.col - (self.col - 1)) * 10))
 
 def crear_grid(filas, ancho):
     grid = []
@@ -180,31 +184,53 @@ def obtener_click_pos(pos, filas, ancho):
     col = x // ancho_nodo
     return fila, col
 
-def algoritmo_aStar(fin, lc, la, grid, actual):
-    i = 0
-    while(i < 2):
-        actual.actualizar_vecinos(grid)
+#Función principal del algoritmo A*
+def algoritmo_aStar(fin, lc, la, grid, actual, inicio):
+    #Ciclo principal, termina cuando el nodo actual es el nodo fin
+    while(actual.fila != fin.fila or actual.col != fin.col):
+        actual.actualizar_vecinos(grid, fin)
+        #Agregar vecinos a la lista abierta (LA) si no están en la lista cerrada (LC) ni en LA
         for vecino in actual.vecinos:
             if la[vecino.fila][vecino.col] is None and lc[vecino.fila][vecino.col] is None:
                 la[vecino.fila][vecino.col] = vecino
-                grid[vecino.fila][vecino.col].hacer_la()
+                if(vecino.fila != fin.fila or vecino.col != fin.col):
+                    grid[vecino.fila][vecino.col].hacer_la()
                 print(f"Agregando a LA: ({vecino.fila}, {vecino.col}) con total {vecino.total}")
+            #Realiza el recaltulo si existe una mejor opción
             elif la[vecino.fila][vecino.col] is not None and vecino.total < la[vecino.fila][vecino.col].total:
                 la[vecino.fila][vecino.col] = vecino
+        #Convierte la LA en una lista de una dimensión para facilitar la búsqueda del nodo con el menor costo total
         nodos_la = [nodo for fila in la for nodo in fila if nodo is not None]
+        #Selecciona el nodo con el menor costo total
         actual = min(nodos_la, key=lambda x: x.total) if nodos_la else None
-        print(f"Actual: ({actual.fila}, {actual.col}) con total {actual.total}" if actual else "No hay nodos en LA")
+        print(f"Actual: ({actual.fila}, {actual.col}) con total {actual.total}" if actual else "No hay camino posible")
         if actual is None:
-            print("No hay camino posible")
             return
+        #Actualiza las listas LC y LA
         lc[actual.fila][actual.col] = actual
         la[actual.fila][actual.col] = None
-        grid[actual.fila][actual.col].hacer_lc()
-
-        i += 1
-
-def actualizarLA(la, actual, grid):
-    pass
+        if actual.fila != fin.fila or actual.col != fin.col:
+            grid[actual.fila][actual.col].hacer_lc()
+      
+    #Si encuentra el camino, recorre los nodos padres para marcar el camino al inicio      
+    if(actual.fila == fin.fila and actual.col == fin.col):
+        print("Camino encontrado")
+        while actual.padre:
+            actual = actual.padre
+            if (actual.fila != fin.fila or actual.col != fin.col) and (actual.fila != inicio.fila or actual.col != inicio.col):
+                grid[actual.fila][actual.col].hacer_camino()
+        print("Lista abierta (LA):")
+        for fila in la:
+            for nodo in fila:
+                if nodo is not None:
+                    print(f"({nodo.fila}, {nodo.col})", end=" ")
+        print()
+        print("Lista cerrada (LC):")
+        for fila in lc:
+            for nodo in fila:
+                if nodo is not None:
+                    print(f"({nodo.fila}, {nodo.col})", end=" ")
+        print()
 
 def main(ventana, ancho):
     FILAS = 10
@@ -253,9 +279,14 @@ def main(ventana, ancho):
                     lc = [[None for _ in range(FILAS)] for _ in range(FILAS)]
                     la = [[None for _ in range(FILAS)] for _ in range(FILAS)]
                     lc[actual.fila][actual.col] = actual
-                    algoritmo_aStar(fin, lc, la, grid, actual)
+                    algoritmo_aStar(fin, lc, la, grid, actual, inicio)
                 else:
                     print("Por favor, selecciona un nodo de inicio y fin.")
+            
+            elif pygame.key.get_pressed()[pygame.K_r]:  # Tecla r' para resetear
+                inicio = None
+                fin = None
+                grid = crear_grid(FILAS, ancho)
                 
 
     pygame.quit()
