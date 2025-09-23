@@ -191,24 +191,28 @@ def algoritmo_aStar(fin, lc, la, grid, actual, inicio):
         actual.actualizar_vecinos(grid, fin)
         #Agregar vecinos a la lista abierta (LA) si no están en la lista cerrada (LC) ni en LA
         for vecino in actual.vecinos:
-            if la[vecino.fila][vecino.col] is None and lc[vecino.fila][vecino.col] is None:
-                la[vecino.fila][vecino.col] = vecino
+            if la.get((vecino.fila, vecino.col)) is None and lc.get((vecino.fila, vecino.col)) is None:
+                la[(vecino.fila, vecino.col)] = vecino
                 if(vecino.fila != fin.fila or vecino.col != fin.col):
                     grid[vecino.fila][vecino.col].hacer_la()
                 print(f"Agregando a LA: ({vecino.fila}, {vecino.col}) con total {vecino.total}")
             #Realiza el recaltulo si existe una mejor opción
-            elif la[vecino.fila][vecino.col] is not None and vecino.total < la[vecino.fila][vecino.col].total:
-                la[vecino.fila][vecino.col] = vecino
-        #Convierte la LA en una lista de una dimensión para facilitar la búsqueda del nodo con el menor costo total
-        nodos_la = [nodo for fila in la for nodo in fila if nodo is not None]
+            elif la.get((vecino.fila, vecino.col)) is not None and vecino.total < la[(vecino.fila, vecino.col)].total:
+                la[(vecino.fila, vecino.col)] = vecino
+        #Obtenemos el menor valor de LA
+        minValue = min(la.values(), key=lambda x: x.total).total if la else float("inf")
         #Selecciona el nodo con el menor costo total
-        actual = min(nodos_la, key=lambda x: x.total) if nodos_la else None
+        actual = None
+        for key in la:
+            if la[key].total == minValue:
+                actual = la[key]
+                break
         print(f"Actual: ({actual.fila}, {actual.col}) con total {actual.total}" if actual else "No hay camino posible")
         if actual is None:
             return
         #Actualiza las listas LC y LA
-        lc[actual.fila][actual.col] = actual
-        la[actual.fila][actual.col] = None
+        lc[(actual.fila, actual.col)] = actual
+        la.pop((actual.fila, actual.col))
         if actual.fila != fin.fila or actual.col != fin.col:
             grid[actual.fila][actual.col].hacer_lc()
       
@@ -220,20 +224,18 @@ def algoritmo_aStar(fin, lc, la, grid, actual, inicio):
             if (actual.fila != fin.fila or actual.col != fin.col) and (actual.fila != inicio.fila or actual.col != inicio.col):
                 grid[actual.fila][actual.col].hacer_camino()
         print("Lista abierta (LA):")
-        for fila in la:
-            for nodo in fila:
-                if nodo is not None:
-                    print(f"({nodo.fila}, {nodo.col})", end=" ")
+        for key in la:
+            nodo = la[key]
+            print(f"({nodo.fila}, {nodo.col})", end=" ")
         print()
         print("Lista cerrada (LC):")
-        for fila in lc:
-            for nodo in fila:
-                if nodo is not None:
-                    print(f"({nodo.fila}, {nodo.col})", end=" ")
+        for key in lc:
+            nodo = lc[key]
+            print(f"({nodo.fila}, {nodo.col})", end=" ")
         print()
 
 def main(ventana, ancho):
-    FILAS = 10
+    FILAS = 11
     grid = crear_grid(FILAS, ancho)
 
     inicio = None
@@ -276,9 +278,9 @@ def main(ventana, ancho):
                 if(inicio and fin):
                     print("TODO: Implementar algoritmo A* aquí")
                     actual = NodoAStar(inicio.fila, inicio.col, inicio.ancho, inicio.total_filas, None, 0, 0)
-                    lc = [[None for _ in range(FILAS)] for _ in range(FILAS)]
-                    la = [[None for _ in range(FILAS)] for _ in range(FILAS)]
-                    lc[actual.fila][actual.col] = actual
+                    lc = {}
+                    la = {}
+                    lc[(actual.fila, actual.col)] = actual
                     algoritmo_aStar(fin, lc, la, grid, actual, inicio)
                 else:
                     print("Por favor, selecciona un nodo de inicio y fin.")
