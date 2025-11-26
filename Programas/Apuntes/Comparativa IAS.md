@@ -1,66 +1,68 @@
-# Comparativa de IAs: Análisis de Datos "Generación Z vs Frankenstein"
+# Análisis de las 4 IAs
 
-Esta comparativa evalúa el desempeño de dos modelos de IA al enfrentarse a un conjunto de datos periodísticos. Se utiliza el archivo CSV completo (200 registros) como la **"Verdad Absoluta" (Ground Truth)** para verificar la precisión de las respuestas.
+Para evaluar el desempeño, primero establecemos los **Hechos Reales (Ground Truth)** del archivo CSV, que son los únicos datos válidos matemáticamente:
+* **Volumen:** 200 registros exactos.
+* **Distribución:** 50% Generación Z / 50% Frankenstein.
+* **Cronología:** Datos de Agosto, Octubre y Noviembre de 2025. **No hay Diciembre.**
+* **Pico de Actividad:** 16 de Noviembre de 2025 (28 registros).
+* **Caso "El Financiero":** 4 registros reales (todos de Frankenstein).
 
-  * **IA 1 (Enfoque Conversacional):** Muestra limitaciones severas en el manejo de datos estructurados. Analiza una **muestra minúscula** (solo 6 registros visibles o alucinados) y extrapola conclusiones erróneas para todo el dataset. Falla en identificar patrones macro y alucina información sobre IDs específicos.
-  * **IA 2 (Enfoque Programático - Python):** Actúa como un Analista de Datos experto. Detecta errores de formato en el CSV original (líneas malformadas), escribe código para corregirlos y carga la totalidad de los datos (200 registros). Sus respuestas son precisas y basadas en evidencia matemática.
+### 1. Perfiles de las Inteligencias
 
------
+#### **IA 1: LLama 3.2**
+* **Perfil:** Intenta leer el texto plano pero tiene una "ventana de atención" muy corta. Lee los primeros registros y olvida el resto.
+* **Comportamiento:** No inventa datos agresivamente, pero omite masivamente información existente.
+* **Resultado Clave:** Acertó la proporción 50/50 de pura suerte o estimación temprana, pero falló en encontrar datos específicos (como los de *El Financiero*).
 
-## 2\. Verificación de Resultados: IA vs Realidad
+#### **IA 2: Phi 3**
+* **Perfil:** La más peligrosa. Al no encontrar datos en su memoria, los inventa para complacer al usuario.
+* **Comportamiento:** Rompe la realidad temporal. Inventó un mes entero (**Diciembre**) que no existe en el archivo.
+* **Resultado Clave:** Dijo que el día pico fue el 18 de diciembre, lo cual es imposible. Calculó un total de 206 registros (6 más de los que existen).
 
-A continuación, contrastamos las respuestas dadas por cada IA frente a los datos reales calculados directamente del CSV.
+#### **IA 3: Gemma 3**
+* **Perfil:** Caótica. Mezcla aciertos puntuales con alucinaciones masivas y fallos técnicos.
+* **Comportamiento:** Infló el dataset a **286 registros** (inventando 86 inexistentes). Sufrió un colapso técnico (bucle infinito) al intentar listar palabras clave.
+* **Resultado Clave:** Fue la única IA de texto que acertó el día pico (**16 de Noviembre**), aunque erró en la cantidad de registros (dijo 9, son 28).
 
-### Pregunta 1: Proporción de Categorías
+#### **IA 4: Gemini**
+* **Perfil:** No lee, **ejecuta**. Utiliza código Python para analizar la estructura matemática del archivo.
+* **Comportamiento:** Determinista y preciso. Si el dato existe, lo cuenta; si no, marca cero.
+* **Resultado Clave:** Identificó los 200 registros exactos, la fecha pico correcta con su volumen real (28) y filtró correctamente los medios sin alucinar.
 
-*¿Cuál es la proporción de registros entre "Generación Z" y "Frankenstein"?*
+---
 
-| Métrica | Verdad Absoluta (CSV) | Respuesta IA 1 | Respuesta IA 2 |
-| :--- | :--- | :--- | :--- |
-| **Registros Totales** | **200** | 6 (3 de cada una) | 200 |
-| **Proporción** | **50% vs 50%** (100 c/u) | 50% vs 50% | 50% vs 50% |
-| **Veredicto** | - | **Engañoso**: Acierta el % por casualidad, pero ignora el 97% de los datos. | **Correcto**: Calculado sobre el total real. |
+### 2. Tabla Comparativa de Rendimiento
 
-### Pregunta 2: Medios con mayor cobertura (Top 3)
+| Métrica Crítica | IA 1 (Texto) | IA 2 (Texto) | IA 3 (Texto) | **IA 4 (Código)** | **Veredicto** |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Total de Registros** | *No calculó* (Muestra <10) | 206 (Falso) | 286 (Muy Falso) | **200 (Exacto)** | **IA 4 Gana** |
+| **Proporción (GenZ / Frank)** | **50% / 50%** | 62% / 37% | 46% / 53% | **50% / 50%** | **Empate IA 1 y IA 4** |
+| **Fecha de Mayor Actividad** | 15 Nov (Incorrecto) | 18 Dic (**Inexistente**) | **16 Nov** (Correcto) | **16 Nov** (Correcto) | **IA 3 y IA 4 Ganan** |
+| **Conteo del Día Pico** | 3 registros | N/A | 9 registros | **28 registros** | **IA 4 Gana** |
+| **Registros "El Financiero"** | "No hay" (Ceguera) | "Cero" (Error lógico) | "2 GenZ, 3 Frank" (Falso) | **4 de Frankenstein** | **IA 4 Gana** |
+| **Registros Frank < 7 Nov** | "Solo 1" | "Cero" | 11 registros | **34 registros** | **IA 4 Gana** |
+| **Alucinación de Datos** | Baja (Omisión) | **Crítica** (Invención) | **Alta** (Invención + Glitch) | **Nula** | **IA 4 Gana** |
 
-*Sin contar "El País", ¿cuáles son los medios con más registros?*
+---
 
-| Ranking | Verdad Absoluta (CSV) | Respuesta IA 1 | Respuesta IA 2 |
-| :--- | :--- | :--- | :--- |
-| **1º Lugar** | **Milenio** (6 registros) | Televisa (2) | Milenio (6) |
-| **2º Lugar** | **Reuters / El Universal** (4 c/u) | Box Office Guru (1) | Reuters (4) |
-| **3º Lugar** | **Varios con 3** | Netflix Data (1) | El Universal (4) |
-| **Veredicto** | - | **Incorrecto**: Inventa un ranking basado en su micro-muestra. | **Correcto**: Coincide con la data real. |
+### 3. Argumentación y Análisis Forense
 
-### Pregunta 3: Día de Mayor Actividad
+#### **¿Por qué fallaron IA 1, 2 y 3?**
+1.  **Saturación de Contexto:** Al leer el CSV como texto, perdieron el hilo después de las primeras 20-50 líneas. Por eso la IA 1 dice "solo encontré 1 registro" cuando había 34.
+2.  **Relleno Probabilístico:** Cuando la IA 2 y 3 no recordaban el dato, su entrenamiento las obligó a generar una respuesta "plausible" pero falsa (como inventar fechas en diciembre para sonar coherentes).
 
-*¿Cuál fue el día con más noticias publicadas?*
+#### **¿Por qué triunfó la IA 4?**
+La IA 4 operó bajo un modelo de **Razonamiento Computacional**. No intentó memorizar el archivo; generó un script (una herramienta) para procesarlo.
+* **Filtrado Real:** Para encontrar "El Financiero", la IA 4 no leyó el texto; aplicó un filtro `df[df['Medio'] == 'El Financiero']`. Esto garantiza 100% de precisión.
+* **Sin Sentimientos:** La IA 4 no tiene sesgos de "completar" información. Si el código dice 200 filas, reporta 200 filas.
 
-| Métrica | Verdad Absoluta (CSV) | Respuesta IA 1 | Respuesta IA 2 |
-| :--- | :--- | :--- | :--- |
-| **Fecha** | **2025-11-16** | 2025-11-04 | 2025-11-16 |
-| **Volumen** | **28 registros** | "Mayoría" (de su muestra) | 28 registros |
-| **Veredicto** | - | **Incorrecto**: Selecciona una fecha arbitraria de sus pocos datos. | **Correcto**: Identifica el pico real de actividad. |
+---
 
------
+### 4. Conclusión Definitiva
 
-## 3\. Análisis Técnico y de Errores
+El ranking final basado en **Fiabilidad para Análisis de Datos**:
 
-### IA 1: Alucinaciones y Contexto Limitado
-
-  * **Error Crítico de Lectura:** La IA 1 afirma explícitamente: *"Hay 3 registros sobre Generación Z... y 3 registros sobre Frankenstein"*. Esto indica que no leyó el archivo completo o que su ventana de contexto le impidió procesar las 200 filas, limitándose a un "snippet" inicial.
-  * **Alucinación de Datos:** En su intento de justificar respuestas, la IA 1 asigna fechas incorrectas a ciertos IDs (ej. asocia registros del 16 de nov al 4 de nov) para que cuadren con su narrativa.
-  * **Incapacidad de Procesamiento:** No detectó el error de sintaxis en el archivo CSV (línea 185 malformada) porque nunca llegó a leer hasta esa línea.
-
-### IA 2: Robustez y Código
-
-  * **Limpieza de Datos:** La IA 2 detectó que el CSV tenía líneas con errores (comas dentro de títulos sin comillas, ej. *"Mi Frankenstein no tiene miedo, tiene dolor"*). Escribió una función en Python (`fix_csv_line`) para reparar esto antes de cargar el DataFrame, lo cual es una habilidad avanzada de manejo de datos.
-  * **Análisis de Sentimiento:** Al no poder "leer" subjetivamente 200 textos uno por uno, la IA 2 implementó un algoritmo basado en diccionarios de palabras positivas/negativas, lo cual es la aproximación escalable correcta para datasets grandes.
-
-## 4\. Conclusión
-
-La **IA 2 es inmensamente superior** para esta tarea. Mientras que la IA 1 actúa como un chatbot conversacional que intenta "adivinar" basándose en fragmentos, la IA 2 actúa como un entorno de ejecución de código (Python) que garantiza:
-
-1.  **Integridad de los datos** (carga el 100% del archivo).
-2.  **Precisión matemática** (cálculos exactos vs estimaciones).
-3.  **Reproducibilidad** (el código puede auditarse).
+1. **IA 4 (Campeona Indiscutible):** La única capaz de ofrecer una verdad objetiva. Demostró precisión matemática, coherencia temporal y capacidad de filtrado profundo. **Es la única opción válida para trabajar con CSVs.**
+2. **IA 1 (La "Menos Peor"):** Aunque es ciega a los detalles (falló en conteos específicos), acertó la métrica macro más importante (50/50). Es "segura" porque sus errores son por omisión ("no sé") en lugar de invención.
+3. **IA 3 (El Peligro Inestable):** Acertó la fecha, lo cual es meritorio, pero inventar casi 100 registros fantasma y entrar en bucles técnicos la hace inútil para reportes serios.
+4. **IA 2 (Descalificada):** Inventar datos temporales (Diciembre) en un análisis cronológico es un error fatal que invalida cualquier conclusión. Es activamente engañosa.
