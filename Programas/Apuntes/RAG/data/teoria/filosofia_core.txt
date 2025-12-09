@@ -1,0 +1,92 @@
+TITULO: Marco Filosófico - Generación Z, Tecnología y Sentido
+AUTOR: Sintesis de Byung-Chul Han, Bauman, Foucault, Heidegger
+
+CONCEPTO: La Sociedad del Cansancio AUTOR(ES): Byung-Chul Han
+DEFINICION: La sociedad disciplinaria ha mutado en sociedad de
+rendimiento donde el sujeto se autoexplota. RELACION CON GEN Z: La Gen Z
+vive el burnout por presión interna de ser visible y productiva. —
+
+CONCEPTO: Modernidad Líquida AUTOR(ES): Zygmunt Bauman DEFINICION:
+Identidades y estructuras sociales pierden solidez. RELACION CON GEN Z:
+Las identidades digitales son fluidas, editables y precarias. —
+
+CONCEPTO: Biopoder y Panóptico Digital AUTOR(ES): Michel Foucault
+DEFINICION: La vida es gestionada y vigilada mediante estructuras de
+poder. RELACION CON GEN Z: Los algoritmos funcionan como vigilancia
+voluntaria y constante. —
+
+CONCEPTO: La Pregunta por la Técnica AUTOR(ES): Martin Heidegger
+DEFINICION: La tecnología enmarca al mundo como recurso disponible.
+RELACION CON GEN Z: El usuario se vuelve un recurso de datos para
+plataformas. —
+
+CONCEPTO: Crisis de Sentido Existencial AUTOR(ES): Sartre / Camus
+DEFINICION: La falta de propósito genera náusea y vacío. RELACION CON
+GEN Z: La hiperconectividad produce aislamiento y nihilismo digital. —
+
+CONCEPTO: Sociedad de la Transparencia AUTOR(ES): Byung-Chul Han
+DEFINICION: La exposición total se vuelve norma. RELACION CON GEN Z: La
+Gen Z vive en autoexposición constante para ser reconocida. —
+
+CONCEPTO: El Yo como Proyecto AUTOR(ES): Ulrich Beck / Anthony Giddens
+DEFINICION: La identidad debe construirse y gestionarse como empresa.
+RELACION CON GEN Z: La autooptimización permanente genera culpa y
+ansiedad. —
+
+CONCEPTO: Capitalismo de la Atención AUTOR(ES): Herbert Simon / Yves
+Citton DEFINICION: La atención se vuelve el recurso escaso. RELACION CON
+GEN Z: Los microestímulos reducen la capacidad de concentración
+profunda. —
+
+CONCEPTO: Capitalismo de Vigilancia AUTOR(ES): Shoshana Zuboff
+DEFINICION: Los datos personales son materia prima para predecir
+conductas. RELACION CON GEN Z: La personalización algorítmica erosiona
+la autonomía. —
+
+CONCEPTO: Posverdad AUTOR(ES): Hannah Arendt / Zygmunt Bauman
+DEFINICION: La verdad depende de narrativas más que de hechos. RELACION
+CON GEN Z: Deepfakes y viralidad generan confusión sobre lo real. —
+
+CONCEPTO: Interpasividad AUTOR(ES): Robert Pfaller DEFINICION: Se
+delegan emociones y experiencias a dispositivos. RELACION CON GEN Z: Las
+apps “sienten por” los usuarios, disminuyendo agencia emocional. —
+
+CONCEPTO: Rizoma AUTOR(ES): Deleuze & Guattari DEFINICION: Redes sin
+jerarquía y en constante mutación. RELACION CON GEN Z: Identidades
+rizomáticas en fandoms y subculturas digitales. —
+
+CONCEPTO: Manifiesto Cyborg / Cibercuerpo AUTOR(ES): Donna Haraway
+DEFINICION: La identidad emerge de la fusión humano-máquina. RELACION
+CON GEN Z: Los filtros y avatares crean cuerpos aumentados e ideales
+digitales. —
+
+CONCEPTO: Sociedad del Espectáculo AUTOR(ES): Guy Debord DEFINICION: La
+vida se convierte en representación y mercancía. RELACION CON GEN Z: Si
+no se publica, no existe: vivir para la cámara. —
+
+CONCEPTO: Aceleracionismo / Aceleración Social AUTOR(ES): Paul Virilio /
+Hartmut Rosa DEFINICION: La modernidad aumenta la velocidad en todas las
+dimensiones. RELACION CON GEN Z: La lentitud se percibe como fracaso; se
+vive en inmediatez permanente. —
+
+CONCEPTO: Anomia AUTOR(ES): Émile Durkheim DEFINICION: La pérdida de
+normas comunes genera desorientación. RELACION CON GEN Z: Sin
+comunidades sólidas, muchos jóvenes experimentan vacío. —
+
+CONCEPTO: Inautenticidad AUTOR(ES): Martin Heidegger DEFINICION: El
+sujeto vive según lo que “se hace” y “se dice”. RELACION CON GEN Z: Los
+trends moldean expresiones y minimizan autenticidad. —
+
+CONCEPTO: Tecnologías de la Información y el Yo AUTOR(ES): Sherry Turkle
+DEFINICION: Las pantallas redefinen la intimidad y el vínculo humano.
+RELACION CON GEN Z: El ghosting y la superficialidad emocional afectan
+relaciones. —
+
+CONCEPTO: Simulacros e Hiperrealidad AUTOR(ES): Jean Baudrillard
+DEFINICION: La realidad es sustituida por representaciones
+hiperintensas. RELACION CON GEN Z: Filtros e IA generan realidades más
+atractivas que lo real. —
+
+CONCEPTO: Cultura del Rendimiento AUTOR(ES): Byung-Chul Han DEFINICION:
+La autoexplotación se vuelve forma dominante de violencia. RELACION CON
+GEN Z: Ser “productivo” siempre genera ansiedad y fatiga crónica. —
