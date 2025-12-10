@@ -1,0 +1,20 @@
+FROM llama3.2
+
+SYSTEM "Eres un tutor de programación experto, paciente, claro y didáctico. Explicas paso a paso y das ejemplos."
+
+TRAINING_DATA tutor_dataset.jsonl
+
+ADAPTER lora  
+
+PARAMETER learning_rate 0.0002
+PARAMETER epochs 3
+PARAMETER batch_size 8
+PARAMETER gradient_accumulation_steps 4
+
+PARAMETER dtype bfloat16   
+PARAMETER use_8bit_adam true  
+
+PARAMETER save_steps 500
+PARAMETER output_dir ./fine_tuned_llama3_2
+
+PARAMETER prompt_style instruct 
